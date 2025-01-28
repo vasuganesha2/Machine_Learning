@@ -2,32 +2,31 @@
 #define __KNN_H
 
 
-#include <bits/stdc++.h>
-#include "data.hpp"
+#include "common.hpp"
 
 using namespace std;
 
-class knn
+class knn : public common_data
 {
     int k;
-    vector<Data*> *neighbour;
-    vector<Data*> *training_data;
-    vector<Data*> *test_data;
-    vector<Data*> * validation_data;
+    vector<Data<DATA_TYPE>*> *neighbour;
+    vector<Data<DATA_TYPE>*> *training_data;
+    vector<Data<DATA_TYPE>*> *test_data;
+    vector<Data<DATA_TYPE>*> * validation_data;
     
     public:
     knn(int);
     knn();
     ~knn();
 
-    void find_k_nearest(Data *query);
-    void set_training_data(vector<Data*> *vec);
-    void set_test_data(vector<Data *> *data);
-    void set_validation_data(vector<Data*> *data);
+    void find_k_nearest(Data<DATA_TYPE> *query);
+    void set_training_data(vector<Data<DATA_TYPE>*> *vec);
+    void set_test_data(vector<Data<DATA_TYPE>*> *data);
+    void set_validation_data(vector<Data<DATA_TYPE>*> *data);
     void set_k(int val);
 
     int predict();
-    double calculate_distance(Data *query_point, Data*input);
+    double calculate_distance(Data<DATA_TYPE> *query_point, Data<DATA_TYPE>*input);
     double validate_performance();
     double test_performacne();
     

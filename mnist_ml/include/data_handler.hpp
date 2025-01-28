@@ -7,12 +7,15 @@
 
 using namespace std;
 
+
+
+
 class data_handler
 {
-    vector<Data*> *data_array;
-    vector<Data*> *training_data;
-    vector<Data*> *test_data;
-    vector<Data*> *validation_data;
+    vector<Data<DATA_TYPE>*> *data_array;
+    vector<Data<DATA_TYPE>*> *training_data;
+    vector<Data<DATA_TYPE>*> *test_data;
+    vector<Data<DATA_TYPE>*> *validation_data;
 
     int num_classes;
     int feature_vector_size;
@@ -32,9 +35,10 @@ class data_handler
     void count_classes();
     
     uint32_t convert_to_little_endian(const unsigned char* byte);
-    vector<Data*> *get_training_data();
-    vector<Data*> *get_test_data();
-    vector<Data*> *get_validation_data();
+    vector<Data<DATA_TYPE>*> *get_training_data();
+    vector<Data<DATA_TYPE>*> *get_test_data();
+    vector<Data<DATA_TYPE>*> *get_validation_data();
+    int get_class_count();
 };
 
 

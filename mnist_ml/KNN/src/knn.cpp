@@ -17,9 +17,9 @@ knn :: ~knn()
 
 }
 
-void knn :: find_k_nearest(Data *query)
+void knn :: find_k_nearest(Data<DATA_TYPE> *query)
 {
-    neighbour = new vector<Data *>;
+    neighbour = new vector<Data<DATA_TYPE> *>;
     double min = numeric_limits<double>::max();
     double previos_min = min;
     int index = 0;
@@ -58,11 +58,11 @@ void knn :: find_k_nearest(Data *query)
 
 
 
-struct compare {
-    bool operator()(Data* d1, Data* d2) {
-        return d1->get_distance() > d2->get_distance();  // Min-Heap: smallest distance at top
-    }
-};
+// struct compare {
+//     bool operator()(Data* d1, Data* d2) {
+//         return d1->get_distance() > d2->get_distance();  // Min-Heap: smallest distance at top
+//     }
+// };
 
 // void knn::find_k_nearest(Data *query) 
 // {
@@ -96,17 +96,17 @@ struct compare {
 
 
 
-void knn :: set_training_data(vector<Data*> *vec)
+void knn :: set_training_data(vector<Data<DATA_TYPE>*> *vec)
 {
     training_data = vec;
 }
 
-void knn :: set_test_data(vector<Data *> *data)
+void knn :: set_test_data(vector<Data<DATA_TYPE>*> *data)
 {
     test_data = data;
 }
 
-void knn :: set_validation_data(vector<Data*> *data)
+void knn :: set_validation_data(vector<Data<DATA_TYPE>*> *data)
 {
     validation_data = data;
 }
@@ -139,7 +139,7 @@ int knn:: predict()
 
 
 
-double knn::calculate_distance(Data *query_point, Data *input)
+double knn::calculate_distance(Data<DATA_TYPE> *query_point, Data<DATA_TYPE> *input)
 {
     double distance = 0.0;
 
@@ -176,14 +176,14 @@ double knn :: validate_performance()
     int count = 0;
     int data_index = 0;
     
-    for(Data * query_point : *validation_data)
+    for(Data<DATA_TYPE> * query_point : *validation_data)
     {
         find_k_nearest(query_point);
         int prediction = predict();
         if(prediction == query_point -> get_label()) count++;
         data_index++;
 
-        printf("Predicted Class: %d  Actual Class: %d Count %d\n", prediction, query_point->get_label(), count);
+        //printf("Predicted Class: %d  Actual Class: %d Count %d\n", prediction, query_point->get_label(), count);
 
         current_performance = (count * 100) / data_index; 
         
@@ -203,7 +203,7 @@ double knn :: test_performacne()
 
     int data_index = 0;
     
-    for(Data * query_point : *validation_data)
+    for(Data<DATA_TYPE> * query_point : *validation_data)
     {
         find_k_nearest(query_point);
         int prediction = predict();

@@ -3,13 +3,20 @@
 
 #include <vector>
 #include <cstdint>
-using namespace std;
 
-class Data {
+
+#ifndef DATA_TYPE
+    #define DATA_TYPE uint8_t
+#endif
+
+template <typename T = DATA_TYPE>
+
+class Data 
+{
 private:
-    std::vector<uint8_t>* feature_vector; // Pointer to a vector of uint8_t
-    uint8_t label;                       // Label of the data
-    int enum_label;                      // Enumerated label (e.g., A -> 1, B -> 2)
+    std::vector<T>* feature_vector; // Pointer to a vector of type T
+    uint8_t label;                  // Label of the data
+    int enum_label;                 // Enumerated label (e.g., A -> 1, B -> 2)
     double distance;
 
 public:
@@ -18,19 +25,21 @@ public:
     ~Data();
 
     // Setters
-    void set_feature_vector(std::vector<uint8_t>* fv);
-    void append_to_feature_vector(uint8_t value);
+    void set_feature_vector(std::vector<T>* fv);
+    void append_to_feature_vector(T value);
     void set_label(uint8_t lbl);
     void set_enumerated_label(int enumLbl);
-
     void set_distance(double distance);
 
     // Getters
     int get_feature_vector_size() const;
     uint8_t get_label() const;
     int get_enumerated_label() const;
-    vector<uint8_t>* get_feature_vector() const;
+    std::vector<T>* get_feature_vector() const;
     double get_distance() const;
 };
+
+// Include implementation file
+#include "../src/data.tpp"
 
 #endif // __DATA_H

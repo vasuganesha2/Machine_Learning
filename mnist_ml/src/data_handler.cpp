@@ -6,16 +6,17 @@ using namespace std;
 
 data_handler::data_handler()
 {
-    data_array = new vector<Data *>;
-    training_data = new vector<Data *>;
-    test_data = new vector<Data *>;
-    validation_data = new vector<Data *>;
+    data_array = new vector<Data<DATA_TYPE>*>;
+    training_data = new vector<Data<DATA_TYPE>*>;
+    test_data = new vector<Data<DATA_TYPE>*>;
+    validation_data = new vector<Data<DATA_TYPE>*>;
 }
 
 data_handler::~data_handler()
 {
-
 }
+
+
 
 void data_handler:: read_feature_vector(std:: string path)
 {
@@ -37,7 +38,7 @@ void data_handler:: read_feature_vector(std:: string path)
 
         for(uint32_t i = 0; i < header[1]; i++)
         {
-            Data * d = new Data();
+            Data<DATA_TYPE> * d = new Data<DATA_TYPE>();
             uint8_t element[1];
             for(int j = 0; j < image_size; j++)
             {
@@ -59,6 +60,9 @@ void data_handler:: read_feature_vector(std:: string path)
     }
 
 }
+
+
+
 
 
 void data_handler::read_feature_label(std:: string path)
@@ -103,6 +107,9 @@ void data_handler::read_feature_label(std:: string path)
     }
 }
 
+
+
+
 void data_handler::split_data()
 {
     int train_size = TRAIN_SET_PERCENT * data_array->size();
@@ -141,6 +148,8 @@ void data_handler::split_data()
 }
 
 
+
+
 void  data_handler :: count_classes()
 {
     int count = 0;
@@ -162,25 +171,31 @@ uint32_t data_handler::convert_to_little_endian(const unsigned char *bytes)
     return (uint32_t)((bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | (bytes[3]));
 }
 
-vector<Data*> * data_handler :: get_training_data() 
+vector<Data<DATA_TYPE>*> * data_handler :: get_training_data() 
 {
     return training_data;
 }
-vector<Data*> * data_handler :: get_test_data() 
+vector<Data<DATA_TYPE>*>* data_handler::get_test_data() 
 {
     return test_data;
 }
-vector<Data*> * data_handler :: get_validation_data()
+
+vector<Data<DATA_TYPE>*> * data_handler :: get_validation_data()
 {
     return validation_data;
 }
 
 
-// int main()
-// {
-//     data_handler *dh = new data_handler();
-//     dh -> read_feature_vector("../train-images.idx3-ubyte");
-//     dh -> read_feature_label("../train-labels.idx1-ubyte");
-//     dh -> split_data();
-//     dh -> count_classes();
-// }
+int data_handler :: get_class_count()
+{
+    return num_classes;
+}
+
+int main()
+{
+    data_handler *dh = new data_handler();
+    dh -> read_feature_vector("../train-images.idx3-ubyte");
+    dh -> read_feature_label("../train-labels.idx1-ubyte");
+    dh -> split_data();
+    dh -> count_classes();
+}
