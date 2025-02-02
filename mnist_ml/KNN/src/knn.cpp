@@ -17,79 +17,79 @@ knn :: ~knn()
 
 }
 
-void knn :: find_k_nearest(Data<DATA_TYPE> *query)
-{
-    neighbour = new vector<Data<DATA_TYPE> *>;
-    double min = numeric_limits<double>::max();
-    double previos_min = min;
-    int index = 0;
-    for(int i = 0; i < k; i++)
-    {
-        if(i == 0)
-        {
-            for(int j = 0; j < training_data -> size(); j++)
-            {
-                double distance = calculate_distance(query, training_data -> at(j));
-                training_data -> at(j) -> set_distance(distance);
-                if(distance < min)
-                {
-                    min = distance;
-                    index = j;
-                }
-            }
-        }
-        else
-        {
-            for(int j = 0; j < training_data -> size(); j++)
-            {
-                double distance = training_data -> at(j)->get_distance();
-                if(distance > previos_min && distance < min)
-                {
-                    min = distance;
-                    index = j;
-                }
-            }
-        }
-        neighbour -> push_back(training_data->at(index));
-        previos_min = min;
-        min = numeric_limits<double>:: max();
-    }
-}
-
-
-
-// struct compare {
-//     bool operator()(Data* d1, Data* d2) {
-//         return d1->get_distance() > d2->get_distance();  // Min-Heap: smallest distance at top
-//     }
-// };
-
-// void knn::find_k_nearest(Data *query) 
+// void knn :: find_k_nearest(Data<DATA_TYPE> *query)
 // {
-//     priority_queue<Data*, vector<Data*>, compare> pq;
-
-//     for (unsigned int j = 0; j < training_data->size(); j++) 
+//     neighbour = new vector<Data<DATA_TYPE> *>;
+//     double min = numeric_limits<double>::max();
+//     double previos_min = min;
+//     int index = 0;
+//     for(int i = 0; i < k; i++)
 //     {
-//         double distance = calculate_distance(query, training_data->at(j));
-//         training_data->at(j)->set_distance(distance);
-        
-//         pq.push(training_data->at(j));
-        
-//         if ((int)pq.size() > k) {
-//             pq.pop();  // Remove the farthest neighbor
+//         if(i == 0)
+//         {
+//             for(int j = 0; j < training_data -> size(); j++)
+//             {
+//                 double distance = calculate_distance(query, training_data -> at(j));
+//                 training_data -> at(j) -> set_distance(distance);
+//                 if(distance < min)
+//                 {
+//                     min = distance;
+//                     index = j;
+//                 }
+//             }
 //         }
+//         else
+//         {
+//             for(int j = 0; j < training_data -> size(); j++)
+//             {
+//                 double distance = training_data -> at(j)->get_distance();
+//                 if(distance > previos_min && distance < min)
+//                 {
+//                     min = distance;
+//                     index = j;
+//                 }
+//             }
+//         }
+//         neighbour -> push_back(training_data->at(index));
+//         previos_min = min;
+//         min = numeric_limits<double>:: max();
 //     }
-
-//     // Store k-nearest neighbors in neighbour vector
-//     neighbour = new vector<Data*>;
-//     while (!pq.empty()) {
-//         neighbour->push_back(pq.top());
-//         pq.pop();
-//     }
-
-//     // The order in 'neighbour' will be reversed (farthest first), so reverse if needed
-//     reverse(neighbour->begin(), neighbour->end());
 // }
+
+
+
+struct compare {
+    bool operator()(Data<DATA_TYPE>* d1, Data<DATA_TYPE>* d2) {
+        return d1->get_distance() > d2->get_distance();  // Min-Heap: smallest distance at top
+    }
+};
+
+void knn::find_k_nearest(Data<DATA_TYPE> *query) 
+{
+    priority_queue<Data<DATA_TYPE>*, vector<Data<DATA_TYPE>*>, compare> pq;
+
+    for (unsigned int j = 0; j < training_data->size(); j++) 
+    {
+        double distance = calculate_distance(query, training_data->at(j));
+        training_data->at(j)->set_distance(distance);
+        
+        pq.push(training_data->at(j));
+        
+        if ((int)pq.size() > k) {
+            pq.pop();  // Remove the farthest neighbor
+        }
+    }
+
+    // Store k-nearest neighbors in neighbour vector
+    neighbour = new vector<Data<DATA_TYPE> *>;
+    while (!pq.empty()) {
+        neighbour->push_back(pq.top());
+        pq.pop();
+    }
+
+    // The order in 'neighbour' will be reversed (farthest first), so reverse if needed
+    reverse(neighbour->begin(), neighbour->end());
+}
 
 
 
@@ -157,7 +157,7 @@ double knn::calculate_distance(Data<DATA_TYPE> *query_point, Data<DATA_TYPE> *in
         }
         distance = sqrt(distance);
         return distance;
-    #elif defined MANHATTAN
+    #elif MANHATTAN
         for (unsigned int i = 0; i < query_point->get_feature_vector_size(); i++)
         {
             distance += fabs(query_point->get_feature_vector()->at(i) - input->get_feature_vector()->at(i));
@@ -196,7 +196,7 @@ double knn :: validate_performance()
     return current_performance;
 }
 
-double knn :: test_performacne()
+double knn :: test_performance()
 {
     double current_performance = 0.0;
     int count = 0;
@@ -250,6 +250,6 @@ int main()
     }
 
     knearest->set_k(best_k);
-    knearest->test_performacne();
+    knearest->test_performance();
 
 }

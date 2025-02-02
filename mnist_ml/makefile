@@ -54,7 +54,6 @@
 # 	rm main
 
 
-
 CC = g++
 
 MNIST_ML_ROOT := $(PWD)
@@ -62,7 +61,7 @@ LD_LIBRARY_PATH := $(MNIST_ML_ROOT)/lib
 INCLUDE_DIR := $(MNIST_ML_ROOT)/include
 SRC = $(MNIST_ML_ROOT)/src
 
-CFLAGS := -std=c++11 -shared -g
+CFLAGS := -std=c++20 -shared -g
 LIB_DATA := libdata.so
 EXEC := main_program  # Define the name of the executable
 
@@ -75,7 +74,7 @@ $(LIB_DATA): libdir objdir obj/data_handler.o obj/data.o obj/common.o
 	$(CC) $(CFLAGS) -o $(MNIST_ML_ROOT)/lib/$(LIB_DATA) obj/*.o
 
 $(EXEC): $(SRC)/data_handler.cpp
-	$(CC) -std=c++11 -g -o $(EXEC) $(SRC)/data_handler.cpp -L$(MNIST_ML_ROOT)/lib -ldata -I$(INCLUDE_DIR)
+	$(CC) -std=c++20 -g -o $(EXEC) $(SRC)/data_handler.cpp -L$(MNIST_ML_ROOT)/lib -ldata -I$(INCLUDE_DIR)
 
 libdir:
 	mkdir -p $(MNIST_ML_ROOT)/lib
