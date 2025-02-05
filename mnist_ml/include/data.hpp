@@ -6,7 +6,7 @@
 
 
 #ifndef DATA_TYPE
-    #define DATA_TYPE uint8_t
+    #define DATA_TYPE double
 #endif
 
 template <typename T = DATA_TYPE>
@@ -15,6 +15,7 @@ class Data
 {
 private:
     std::vector<T>* feature_vector; // Pointer to a vector of type T
+    std::vector<int>* class_vector;
     uint8_t label;                  // Label of the data
     int enum_label;                 // Enumerated label (e.g., A -> 1, B -> 2)
     double distance;
@@ -30,12 +31,14 @@ public:
     void set_label(uint8_t lbl);
     void set_enumerated_label(int enumLbl);
     void set_distance(double distance);
+    void set_class_vector(int count);
 
     // Getters
     int get_feature_vector_size() const;
     uint8_t get_label() const;
     int get_enumerated_label() const;
     std::vector<T>* get_feature_vector() const;
+    std::vector<int>* get_class_vector() const;
     double get_distance() const;
 };
 

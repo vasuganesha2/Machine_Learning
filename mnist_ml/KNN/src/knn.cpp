@@ -60,7 +60,7 @@ knn :: ~knn()
 
 struct compare {
     bool operator()(Data<DATA_TYPE>* d1, Data<DATA_TYPE>* d2) {
-        return d1->get_distance() > d2->get_distance();  // Min-Heap: smallest distance at top
+        return d1->get_distance() < d2->get_distance(); // Max-Heap: largest distance at top
     }
 };
 
@@ -76,21 +76,20 @@ void knn::find_k_nearest(Data<DATA_TYPE> *query)
         pq.push(training_data->at(j));
         
         if ((int)pq.size() > k) {
-            pq.pop();  // Remove the farthest neighbor
+            pq.pop();  // Remove the farthest neighbor (now the largest in the max-heap)
         }
     }
 
     // Store k-nearest neighbors in neighbour vector
-    neighbour = new vector<Data<DATA_TYPE> *>;
+    neighbour = new vector<Data<DATA_TYPE>*>;
     while (!pq.empty()) {
         neighbour->push_back(pq.top());
         pq.pop();
     }
 
-    // The order in 'neighbour' will be reversed (farthest first), so reverse if needed
+    // Reverse to order from nearest (smallest distance) to farthest (largest distance)
     reverse(neighbour->begin(), neighbour->end());
 }
-
 
 
 
@@ -110,6 +109,20 @@ void knn :: set_validation_data(vector<Data<DATA_TYPE>*> *data)
 {
     validation_data = data;
 }
+
+
+vector<Data<DATA_TYPE>*>* knn::get_training_data() {
+    return training_data;
+}
+
+vector<Data<DATA_TYPE>*>* knn::get_test_data() {
+    return test_data;
+}
+
+vector<Data<DATA_TYPE>*>* knn::get_validation_data() {
+    return validation_data;
+}
+
 
 void knn :: set_k(int val)
 {
@@ -157,7 +170,7 @@ double knn::calculate_distance(Data<DATA_TYPE> *query_point, Data<DATA_TYPE> *in
         }
         distance = sqrt(distance);
         return distance;
-    #elif MANHATTAN
+    #elif defined MANHATTAN
         for (unsigned int i = 0; i < query_point->get_feature_vector_size(); i++)
         {
             distance += fabs(query_point->get_feature_vector()->at(i) - input->get_feature_vector()->at(i));
@@ -196,7 +209,7 @@ double knn :: validate_performance()
     return current_performance;
 }
 
-double knn :: test_performance()
+double knn :: test_performacne()
 {
     double current_performance = 0.0;
     int count = 0;
@@ -219,37 +232,37 @@ double knn :: test_performance()
     return current_performance;
 }
 
-int main()
-{
-    data_handler*dh = new data_handler();
-    dh -> read_feature_vector("../../train-images.idx3-ubyte");
-    dh -> read_feature_label("../../train-labels.idx1-ubyte");
-    dh -> split_data();
-    dh -> count_classes();
+// int main()
+// {
+//     data_handler<> *dh = new data_handler<>();
+//     dh -> read_feature_vector("../../train-images.idx3-ubyte");
+//     dh -> read_feature_label("../../train-labels.idx1-ubyte");
+//     dh -> split_data();
+//     dh -> count_classes();
 
 
-    knn *knearest = new knn();
+//     knn *knearest = new knn();
 
-    knearest->set_training_data(dh->get_training_data());
-    knearest->set_test_data(dh->get_test_data());
-    knearest->set_validation_data(dh->get_validation_data());
+//     knearest->set_training_data(dh->get_training_data());
+//     knearest->set_test_data(dh->get_test_data());
+//     knearest->set_validation_data(dh->get_validation_data());
 
-    double performance = 0;
-    double best_performance = 0;
-    int best_k = 1;
+//     double performance = 0;
+//     double best_performance = 0;
+//     int best_k = 1;
 
-    for(int i = 1; i <= 4; i++)
-    {
-        knearest->set_k(i);
-        performance = knearest -> validate_performance();
-        if(performance > best_performance)
-        {
-            best_performance = performance;
-            best_k = i;
-        }
-    }
+//     for(int i = 1; i <= 4; i++)
+//     {
+//         knearest->set_k(i);
+//         performance = knearest -> validate_performance();
+//         if(performance > best_performance)
+//         {
+//             best_performance = performance;
+//             best_k = i;
+//         }
+//     }
 
-    knearest->set_k(best_k);
-    knearest->test_performance();
+//     knearest->set_k(best_k);
+//     knearest->test_performacne();
 
-}
+// }

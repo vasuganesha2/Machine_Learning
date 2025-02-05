@@ -1,4 +1,5 @@
 
+export MNIST_ML_ROOT=$PWD
 if [[ -z $MNIST_ML_ROOT ]]; then
     echo "Please define MNSIT ML ROOT"
     exit 1

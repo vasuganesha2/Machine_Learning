@@ -276,33 +276,20 @@ int main()
     dh -> read_feature_label("../../train-labels.idx1-ubyte");
     dh -> split_data();
     dh -> count_classes();
-
     double performance = 0.0;
     double bst_performance = 0.0;
-
-    
-    
-    
     vector<int> arr;
     arr.push_back(dh -> get_training_data() -> at(0) -> get_feature_vector() -> size());
-
     cout << arr[0] << endl;
     arr.push_back(256);
     arr.push_back(128);
     //arr.push_back(21);
     arr.push_back(dh -> get_class_count());
-    
     Network *neural = new Network(4, arr, 0.1);
-
     neural -> set_training_data(dh -> get_training_data());
     neural -> set_test_data(dh -> get_test_data());
     neural -> set_validation_data(dh -> get_validation_data());
-
     neural -> train(32, dh -> get_class_count());
-
     neural -> validate();
     neural -> test();
-
-
-
 }

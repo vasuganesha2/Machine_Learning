@@ -65,4 +65,26 @@ double Data<T>::get_distance() const {
     return distance;
 }
 
+template <typename T>
+void Data<T>::set_class_vector(int count)
+{
+    class_vector = new std::vector<int>();
+    for(int i = 0; i < count; i++)
+    {
+        if(i == label)
+        {
+            class_vector[i] = 1;
+        }
+        else
+        {
+            class_vector[i] = 0;
+        }
+    }
+}
+
+template <typename T>
+std::vector<int> *Data<T>::get_class_vector() const{
+    return class_vector;
+}
+
 #endif // __DATA_TPP
