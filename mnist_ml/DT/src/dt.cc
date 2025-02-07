@@ -189,11 +189,11 @@ int main()
 {
     vector<vector<string>>training_data=
     {
-        {"Green","3","Apple"},
-        {"Yellow","3","Apple"},
-        {"Red","1","Grape"},
-        {"Red","1","Grape"},
-        {"Yellow","3","Lemon"}
+        {"Green","3","Person a"},
+        {"Yellow","3","Person a"},
+        {"Red","1","Person b"},
+        {"Red","1","Person b"},
+        {"Yellow","3","Person c"}
     };
     map<int,int>numeric;
     numeric[0]=3;
@@ -201,12 +201,13 @@ int main()
     numeric[1]=2;
     auto my_tree=build_tree(training_data,numeric);
 
-    vector<vector<string>>testing_data={
-        {"Green","3","Apple"},
-        {"Yellow","4","Apple"},
-        {"Red","2","Grape"},
-        {"Red","1","Grape"},
-        {"Yellow","3","Lemon"}
+    vector<vector<string>>testing_data=
+    {
+        {"Green","3","Person a"},
+        {"Yellow","4","Person a"},
+        {"Red","2","Person b"},
+        {"Red","1","Person b"},
+        {"Yellow","3","Person c"}
     };
 
     for (auto&row:testing_data) 
