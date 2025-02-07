@@ -1,0 +1,14 @@
+Is diameter >= 3?
+--> True:
+  Is color == Yellow?
+  --> True:
+    Predict {'Apple': 1, 'Lemon': 1}
+  --> False:
+    Predict {'Apple': 1}
+--> False:
+  Predict {'Grape': 2}
+Actual: Apple. Predicted: {'Apple': '100%'}
+Actual: Apple. Predicted: {'Apple': '50%', 'Lemon': '50%'}
+Actual: Grape. Predicted: {'Grape': '100%'}
+Actual: Grape. Predicted: {'Grape': '100%'}
+Actual: Lemon. Predicted: {'Apple': '50%', 'Lemon': '50%'}
