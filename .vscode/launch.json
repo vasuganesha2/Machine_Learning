@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "d:/ml_cpp/mnist_ml/KNN/src",
-      "program": "d:/ml_cpp/mnist_ml/KNN/src/build/Debug/outDebug",
+      "externalConsole": false,
+      "cwd": "/home/ap/ml_cpp/mnist_ml",
+      "program": "/home/ap/ml_cpp/mnist_ml/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
