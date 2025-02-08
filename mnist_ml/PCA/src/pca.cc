@@ -1,5 +1,5 @@
 #include"bits/stdc++.h"
-#include"knn.hpp"
+// #include"knn.hpp"
 #include"../include/pca.hpp"
 #include "data_handler.hpp"
 
@@ -19,7 +19,7 @@ PCA::PCA(int d) : dimensions(d)
 void PCA::reduction_training()
 {
     auto training_data = get_training_data();
-    int n = training_data->size();
+    int n = 200;
     if(n == 0) 
     {
         cout << "No training data!" << endl;
@@ -94,7 +94,7 @@ void PCA::reduction()
 {
     // === Process Validation Data ===
     auto validation_data = get_validation_data();
-    int n_val = validation_data->size();
+    int n_val = 100;
     for (int i = 0; i < n_val; i++) {
         Map<VectorXd> x(validation_data->at(i)->get_feature_vector()->data(),
                         validation_data->at(i)->get_feature_vector()->size());
@@ -108,7 +108,7 @@ void PCA::reduction()
 
     // === Process Test Data ===
     auto test_data = get_test_data();
-    int n_test = test_data->size();
+    int n_test = 100;
     for (int i = 0; i < n_test; i++) {
         Map<VectorXd> x(test_data->at(i)->get_feature_vector()->data(),
                         test_data->at(i)->get_feature_vector()->size());

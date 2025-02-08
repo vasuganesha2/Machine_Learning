@@ -3,8 +3,8 @@
 
 #include"common.hpp"
 #include"bits/stdc++.h"
-#include"knn.hpp"
-#include <Eigen/Dense>
+// #include"../KNN/include/knn.hpp"
+#include <eigen3/Eigen/Dense>
 
 
 using namespace std;

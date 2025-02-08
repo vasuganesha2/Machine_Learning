@@ -1,13 +1,14 @@
 #ifndef DT_HPP
 #define DT_HPP
 #include <bits/stdc++.h>
-#include "data.hpp"
-#include "data_handler.hpp"
 #include "common.hpp"
+#include "data_handler.hpp"
+#include "data.hpp"
+#include "../../PCA/include/pca.hpp"
 using namespace std;
 
 template<typename T>
-class Node 
+class Node
 {
 public:
     virtual ~Node()=default;
@@ -54,6 +55,10 @@ template<typename T>
 map<T,int> cnt(vector<vector<T>>&rows);
 
 
+//! numeric
+//? 1->int /double,2->string but int like "123" ,3 ->string (categorical data) 
+
+
 template<typename T>
 pair<vector<vector<T>>,vector<vector<T>>> partition(vector<vector<T>>&rows,Question<T>*question);
 
@@ -67,12 +72,15 @@ template<typename T>
 pair<double,Question<T>*> find_best_split(vector<vector<T>>&rows,map<int,int>&numeric);
 
 template<typename T>
-Node<T>*build_tree(vector<vector<T>>&rows,map<int,int>&numeric);
+Node<T>* build_tree(vector<vector<T>>& rows, map<int, int>& numeric, int depth);
 
 template<typename T>
 map<T,int> classify(vector<T>&row,Node<T>*node);
 
 template<typename T>
-map<T,string> print_leaf(map<T,int>&counts);
+map<T,double> print_leaf(map<T,int>&counts);
+
+void prepare_data(vector<Data<DATA_TYPE>*>*vec, vector<vector<DATA_TYPE>>&res, int siz);
+
 
 #endif // DT_HPP

@@ -73,11 +73,11 @@ void Data<T>::set_class_vector(int count)
     {
         if(i == label)
         {
-            class_vector[i] = 1;
+            (*class_vector)[i] = 1;
         }
         else
         {
-            class_vector[i] = 0;
+            (*class_vector)[i] = 0;
         }
     }
 }
