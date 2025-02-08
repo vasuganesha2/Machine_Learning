@@ -14,6 +14,7 @@ kmeans :: kmeans(int k)
 
 void kmeans :: init_cluster()
 {
+    auto training_data = get_training_data();
     for(int i = 0; i < num_cluster; i++)
     {
         int index = rand() % training_data -> size();
@@ -29,6 +30,7 @@ void kmeans :: init_cluster()
 
 void kmeans :: init_cluster_for_each_class()
 {
+    auto training_data = get_training_data();
     set<int> clusters_used;
     for(int i = 0; i < training_data -> size(); i++)
     {
@@ -42,6 +44,7 @@ void kmeans :: init_cluster_for_each_class()
 }
 void kmeans :: train()
 {
+    auto training_data = get_training_data();
     int index = 0;
     while(used_indices -> size() < training_data -> size())
     { 
@@ -78,6 +81,7 @@ double kmeans :: euclidean_distance(vector<double> *centroid, Data<DATA_TYPE> *p
 
 double kmeans :: validate()
 {
+    auto validation_data = get_validation_data();
     double num_correct = 0.0;
     for(auto query_point : *validation_data)
     {
@@ -99,6 +103,7 @@ double kmeans :: validate()
 
 double kmeans :: test()
 {
+    auto test_data = get_test_data();
     double num_correct = 0.0;
     for(auto query_point : *test_data)
     {

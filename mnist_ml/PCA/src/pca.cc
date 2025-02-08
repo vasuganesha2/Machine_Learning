@@ -9,9 +9,11 @@
 using namespace std;
 using namespace Eigen;
 
-PCA::PCA(int d, int k) : knn(k), dimensions(d) 
-{}
+// PCA::PCA(int d, int k) : knn(k), dimensions(d) 
+// {}
 
+PCA::PCA(int d) : dimensions(d)
+{}
 
 
 void PCA::reduction_training()
@@ -118,34 +120,38 @@ void PCA::reduction()
     }
 }
 
-
-
-int main()
+int PCA:: get_dimension()
 {
-    data_handler<> *dh = new data_handler<>();
-    dh -> read_feature_vector("../../train-images.idx3-ubyte");
-    dh -> read_feature_label("../../train-labels.idx1-ubyte");
-    dh -> split_data();
-    dh -> count_classes();
-
-
-
-    PCA *pca = new PCA(10, 10);
-
-
-
-    pca->set_training_data(dh->get_training_data());
-    pca->set_test_data(dh->get_test_data());
-    pca->set_validation_data(dh->get_validation_data());
-
-
-    pca -> reduction_training();
-
-    pca->reduction();
-
-    pca -> validate_performance();
-    pca -> test_performacne();
-
+    return dimensions;
 }
+
+
+// int main()
+// {
+//     data_handler<> *dh = new data_handler<>();
+//     dh -> read_feature_vector("../../train-images.idx3-ubyte");
+//     dh -> read_feature_label("../../train-labels.idx1-ubyte");
+//     dh -> split_data();
+//     dh -> count_classes();
+
+
+
+//     PCA *pca = new PCA(10, 10);
+
+
+
+//     pca->set_training_data(dh->get_training_data());
+//     pca->set_test_data(dh->get_test_data());
+//     pca->set_validation_data(dh->get_validation_data());
+
+
+//     pca -> reduction_training();
+
+//     pca->reduction();
+
+//     pca -> validate_performance();
+//     pca -> test_performacne();
+
+// }
 
 
